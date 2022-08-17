@@ -65,11 +65,11 @@ vector<int> LinuxParser::Pids() {
   }
   closedir(directory);
   return pids;
-}
+}+ Cached +   SReclaimable - Shmem+ Cached +   SReclaimable - Shmem
 
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() { 
-  float memTotal {1.0}, memFree {1.0};
+  float memTotal {1.0},memAvailable{0.0}, memFree {1.0}, Cached {0.0}, Buffers{0.0}, SReclaimable{0}, Shmem{0.0};
   string line;
   std::ifstream stream(kProcDirectory+kMeminfoFilename);
   if(stream.is_open()){
@@ -79,13 +79,25 @@ float LinuxParser::MemoryUtilization() {
       while(lineStream >> key >> value){
         if(key == "MemTotal:"){
           memTotal =  stof(value);
+        }else if(key == "MemAvailable:"){
+          memAvailable =  stof(value);
         }else if(key == "MemFree:"){
           memFree =  stof(value);
+        }else if(key == "Buffers:"){
+          Buffers =  stof(value);
+        }else if(key == "Cached:"){
+          Cached =  stof(value);
+        }else if(key == "SReclaimable:"){
+          SReclaimable =  stof(value);
+        }else if(key == "Shmem:"){
+          Shmem =  stof(value);
         }
       }
     }
   }
-  return (memTotal - memFree) / memTotal;
+  if(!memAvailable)
+    memAvailable = memFree + Buffers + Cached +   SReclaimable - Shmem;
+  return (memTotal - memAvailable) / memTotal;
  }
 
 // TODO: Read and return the system uptime
@@ -108,7 +120,9 @@ long LinuxParser::IdleJiffies() { return 0; }
 vector<string> LinuxParser::CpuUtilization() { return {}; }
 
 // TODO: Read and return the total number of processes
-int LinuxParser::TotalProcesses() { return 0; }
+int LinuxParser::TotalProcesses() {
+  
+}
 
 // TODO: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { return 0; }

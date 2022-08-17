@@ -147,7 +147,6 @@ long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 // TODO: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
   vector<long> jiffies = AllJiffies();
-  
   if(jiffies.size() >= 10){
     return jiffies[0] +jiffies[1] +jiffies[2] +jiffies[5] +jiffies[6] +jiffies[7] ; //user + nice + system + irq + softirq + steal
   }
@@ -155,7 +154,13 @@ long LinuxParser::ActiveJiffies() {
 }
 
 // TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
+long LinuxParser::IdleJiffies() { 
+   vector<long> jiffies = AllJiffies();
+  if(jiffies.size() >= 10){
+    return jiffies[3] +jiffies[4]; //idle + iowait
+  }
+  return 0;
+ }
 
 // TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() { return {}; }

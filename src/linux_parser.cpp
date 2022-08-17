@@ -117,15 +117,7 @@ long LinuxParser::UpTime() {
   return upTime;
  }
 
-// TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
-
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
-
-// TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() {
+vector<long> LinuxParser::AllJiffies(){
   vector<long> jiffies {};
   string line;
   std::ifstream fileStream(kProcDirectory+kStatusFilename);
@@ -142,6 +134,20 @@ long LinuxParser::ActiveJiffies() {
     }
     
   }
+  return jiffies;
+}
+
+// TODO: Read and return the number of jiffies for the system
+long LinuxParser::Jiffies() { return 0; }
+
+// TODO: Read and return the number of active jiffies for a PID
+// REMOVE: [[maybe_unused]] once you define the function
+long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
+
+// TODO: Read and return the number of active jiffies for the system
+long LinuxParser::ActiveJiffies() {
+  vector<long> jiffies = AllJiffies();
+  
   if(jiffies.size() >= 10){
     return jiffies[0] +jiffies[1] +jiffies[2] +jiffies[5] +jiffies[6] +jiffies[7] ; //user + nice + system + irq + softirq + steal
   }

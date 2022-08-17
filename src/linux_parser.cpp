@@ -65,7 +65,7 @@ vector<int> LinuxParser::Pids() {
   }
   closedir(directory);
   return pids;
-}+ Cached +   SReclaimable - Shmem+ Cached +   SReclaimable - Shmem
+}
 
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() { 
@@ -121,7 +121,21 @@ vector<string> LinuxParser::CpuUtilization() { return {}; }
 
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() {
-  
+  int totalProcesses{0};
+  string line;
+  std::ifstream fileStream(kProcDirectory+kStatFilename);
+  if(fileStream.is_open()){
+    while(getline(fileStream, line)){
+      std::istringstream lineStream(line);
+      string key, value;
+      while (lineStream >> key>> value && key=="processes")
+      {
+        totalProcesses = std::stoi(value);
+      }
+      
+    }
+  }
+  return totalProcesses;
 }
 
 // TODO: Read and return the number of running processes

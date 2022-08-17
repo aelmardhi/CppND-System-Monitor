@@ -8,4 +8,13 @@ using std::string;
 // INPUT: Long int measuring seconds
 // OUTPUT: HH:MM:SS
 // REMOVE: [[maybe_unused]] once you define the function
-string Format::ElapsedTime(long seconds[[maybe_unused]]) { return std::to_string(seconds); }
+string Format::ElapsedTime(long seconds[[maybe_unused]]) {
+    string elapsedTime;
+    elapsedTime = ":" + std::to_string( seconds%60) + elapsedTime;
+    seconds /= 60;
+    elapsedTime = ":" + std::to_string( seconds%60) + elapsedTime;
+    seconds /= 60;
+    elapsedTime = std::to_string( seconds) + elapsedTime;
+    
+    return elapsedTime;
+}

@@ -20,7 +20,10 @@ string Format::ElapsedTime(long seconds) {
             (std::to_string( seconds%60)))
             + elapsedTime;
     seconds /= 60;
-    elapsedTime = std::to_string( seconds) + elapsedTime;
+    elapsedTime = 
+            ((seconds<10)? "0"+(std::to_string( seconds) ):
+            (std::to_string( seconds)))
+            + elapsedTime;
     
     return elapsedTime;
 }

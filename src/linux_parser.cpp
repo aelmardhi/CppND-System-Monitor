@@ -230,7 +230,23 @@ string LinuxParser::Uid(int pid[[maybe_unused]]) {
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::User(int pid[[maybe_unused]]) { 
+  string uid = Uid(pid);
+  string user;
+  string line;
+  std::ifstream fileStream(kPasswordPath);
+  if(fileStream.is_open()){
+    while(getline(fileStream, line)){
+      std::replace(line.begin(), line.end(), ':', ' ');
+      std::istringstream lineStream(line);
+      string key,x, value;
+      if(lineStream>> value >> x >> key && key == uid){
+        user =value;
+      }
+    }
+  }
+  return user;
+ }
 
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function

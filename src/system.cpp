@@ -21,16 +21,15 @@ You need to properly format the uptime. Refer to the comments mentioned in forma
 System::System(){
     kernel_ = LinuxParser::Kernel();
     os_ = LinuxParser::OperatingSystem();
-    Refresh();
 }
 
 void System::Refresh(){
     cpu_.Refresh();
-    RefreshProcesses();
     memoryUtilization_ = LinuxParser::MemoryUtilization();
     runningProcesses_ = LinuxParser::RunningProcesses();
     totalProcesses_ = LinuxParser::TotalProcesses();
     upTime_ = LinuxParser::UpTime();
+    RefreshProcesses();
 }
 
 void System::RefreshProcesses(){
@@ -47,7 +46,7 @@ void System::RefreshProcesses(){
         processes_.emplace_back(Process(pid));
     }
     sort(processes_.rbegin(),processes_.rend());
-    for(Process process: processes_){
+    for(Process& process: processes_){
         process.Refresh();
     }
 }

@@ -14,7 +14,6 @@ using std::vector;
 Process::Process(int pid):pid_(pid){
     user_ = LinuxParser::User(pid);
     cmd_ = LinuxParser::Command(pid);
-    Refresh();
 }
 
 Process::Process(int pid, string user, string cmd, long upTime, string ram, float cpuUtilization): pid_(pid), user_(user), cmd_(cmd), upTime_(upTime), ram_(ram), cpuUtilization_(cpuUtilization) {}

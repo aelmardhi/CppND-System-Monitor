@@ -138,7 +138,7 @@ long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) {
         lineStream>>value;
         active += std::stol(value);
       }
-      active /= sysconf(_SC_CLK_TCK);
+      // active /= sysconf(_SC_CLK_TCK);
     }
   }
   return active;

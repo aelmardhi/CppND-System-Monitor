@@ -27,6 +27,7 @@ class Process {
   long upTime_;
   std::string ram_;
   float cpuUtilization_;
+  long activeJiffies_;
 };
 
 #endif

@@ -19,10 +19,13 @@ Process::Process(int pid):pid_(pid){
 Process::Process(int pid, string user, string cmd, long upTime, string ram, float cpuUtilization): pid_(pid), user_(user), cmd_(cmd), upTime_(upTime), ram_(ram), cpuUtilization_(cpuUtilization) {}
 
 void Process::Refresh(){
-    upTime_ = LinuxParser::UpTime(Pid());
     ram_ = LinuxParser::Ram(Pid());
-    cpuUtilization_ = LinuxParser::ActiveJiffies(Pid()) / (0.0 + upTime_) ;
-
+    long tempUpTime = LinuxParser::UpTime(Pid());
+    long tempActiveJiffies = LinuxParser::ActiveJiffies(Pid());
+    if(tempUpTime == upTime_) return;
+    cpuUtilization_ = (tempActiveJiffies - activeJiffies_)/ (sysconf(_SC_CLK_TCK)+0.0) / (0.0 + tempUpTime - upTime_) ;
+    activeJiffies_ = tempActiveJiffies;
+    upTime_ = tempUpTime;
 }
 
 // TODO: Return this process's ID

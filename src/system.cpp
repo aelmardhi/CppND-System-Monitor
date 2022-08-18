@@ -45,10 +45,10 @@ void System::RefreshProcesses(){
     for(int pid : pids){
         processes_.emplace_back(Process(pid));
     }
-    sort(processes_.rbegin(),processes_.rend());
     for(Process& process: processes_){
         process.Refresh();
     }
+    sort(processes_.rbegin(),processes_.rend());
 }
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }

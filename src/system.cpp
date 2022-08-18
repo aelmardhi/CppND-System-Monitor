@@ -26,7 +26,8 @@ vector<Process>& System::Processes() {
     processes_ = {};
     for (int pid : pids){
         string user = LinuxParser::User(pid);
-        Process process(pid, user);
+        string cmd = LinuxParser::Command(pid);
+        Process process(pid, user, cmd);
         processes_.emplace_back(process);
     }
     return processes_; }

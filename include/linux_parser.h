@@ -41,7 +41,6 @@ enum CPUStates {
   kGuestNice_
 };
 std::vector<std::string> CpuUtilization();
-std::vector<long> AllJiffies();
 long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(int pid);

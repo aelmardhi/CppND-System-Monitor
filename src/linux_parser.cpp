@@ -220,7 +220,7 @@ string LinuxParser::Uid(int pid[[maybe_unused]]) {
     while(getline(fileStream, line)){
       std::istringstream lineStream(line);
       string key, value;
-      if(lineStream>> key >> value && key == "Uid"){
+      if(lineStream>> key >> value && key == "Uid:"){
         uid =value;
       }
     }

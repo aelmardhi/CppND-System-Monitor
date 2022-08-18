@@ -28,7 +28,8 @@ vector<Process>& System::Processes() {
         string user = LinuxParser::User(pid);
         string cmd = LinuxParser::Command(pid);
         long upTime = LinuxParser::UpTime(pid);
-        Process process(pid, user, cmd, upTime);
+        string ram = LinuxParser::Ram(pid);
+        Process process(pid, user, cmd, upTime, ram);
         processes_.emplace_back(process);
     }
     return processes_; }

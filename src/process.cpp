@@ -10,7 +10,7 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-Process::Process(int pid, string user, string cmd, long upTime): pid_(pid), user_(user), cmd_(cmd), upTime_(upTime) {}
+Process::Process(int pid, string user, string cmd, long upTime, string ram): pid_(pid), user_(user), cmd_(cmd), upTime_(upTime), ram_(ram) {}
 
 // TODO: Return this process's ID
 int Process::Pid() { return pid_; }
@@ -22,7 +22,7 @@ float Process::CpuUtilization() { return 0; }
 string Process::Command() { return cmd_; }
 
 // TODO: Return this process's memory utilization
-string Process::Ram() { return string(); }
+string Process::Ram() { return ram_; }
 
 // TODO: Return the user (name) that generated this process
 string Process::User() { return user_; }

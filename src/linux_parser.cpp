@@ -215,7 +215,7 @@ string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
 string LinuxParser::Uid(int pid[[maybe_unused]]) { 
   string uid;
   string line;
-  std::ifstream fileStream(kProcDirectory+kStatFilename);
+  std::ifstream fileStream(kProcDirectory+to_string(pid)+kStatusFilename);
   if(fileStream.is_open()){
     while(getline(fileStream, line)){
       std::istringstream lineStream(line);

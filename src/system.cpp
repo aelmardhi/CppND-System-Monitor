@@ -24,11 +24,10 @@ Processor& System::Cpu() { return cpu_; }
 vector<Process>& System::Processes() { 
     vector<int> pids = LinuxParser::Pids();
     processes_ = {};
-    long sysUpTime = UpTime();
     for (int pid : pids){
         string user = LinuxParser::User(pid);
         string cmd = LinuxParser::Command(pid);
-        long upTime = sysUpTime - LinuxParser::UpTime(pid);
+        long upTime = LinuxParser::UpTime(pid);
         Process process(pid, user, cmd, upTime);
         processes_.emplace_back(process);
     }

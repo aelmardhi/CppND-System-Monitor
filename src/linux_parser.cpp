@@ -272,5 +272,5 @@ long LinuxParser::UpTime(int pid[[maybe_unused]]) {
       upTime /= sysconf(_SC_CLK_TCK);
     }
   }
-  return upTime;
+  return UpTime() - upTime;
 }

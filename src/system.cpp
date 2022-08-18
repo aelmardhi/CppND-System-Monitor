@@ -3,6 +3,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "process.h"
 #include "processor.h"
@@ -32,6 +33,8 @@ vector<Process>& System::Processes() {
         Process process(pid, user, cmd, upTime, ram);
         processes_.emplace_back(process);
     }
+    sort(processes_.rbegin(),processes_.rend());
+
     return processes_; }
 
 // TODO: Return the system's kernel identifier (string)

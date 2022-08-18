@@ -18,6 +18,18 @@ using std::vector;
 
 You need to properly format the uptime. Refer to the comments mentioned in format. cpp for formatting the uptime.*/
 
+System::System(){
+    kernel_ = LinuxParser::Kernel();
+    os_ = LinuxParser::OperatingSystem();
+    Refresh();
+}
+
+void System::Refresh(){
+    memoryUtilization_ = LinuxParser::MemoryUtilization();
+    runningProcesses_ = LinuxParser::RunningProcesses();
+    totalProcesses_ = LinuxParser::TotalProcesses();
+    upTime_ = LinuxParser::UpTime();
+}
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
@@ -34,19 +46,19 @@ vector<Process>& System::Processes() {
     return processes_; }
 
 // TODO: Return the system's kernel identifier (string)
-std::string System::Kernel() { return LinuxParser::Kernel(); }
+std::string System::Kernel() { return kernel_; }
 
 // TODO: Return the system's memory utilization
-float System::MemoryUtilization() { return LinuxParser::MemoryUtilization(); }
+float System::MemoryUtilization() { return memoryUtilization_; }
 
 // TODO: Return the operating system name
-std::string System::OperatingSystem() { return LinuxParser::OperatingSystem(); }
+std::string System::OperatingSystem() { return os_; }
 
 // TODO: Return the number of processes actively running on the system
-int System::RunningProcesses() { return LinuxParser::RunningProcesses(); }
+int System::RunningProcesses() { return runningProcesses_; }
 
 // TODO: Return the total number of processes on the system
-int System::TotalProcesses() { return LinuxParser::TotalProcesses(); }
+int System::TotalProcesses() { return totalProcesses_; }
 
 // TODO: Return the number of seconds since the system started running
-long int System::UpTime() { return LinuxParser::UpTime(); }
+long int System::UpTime() { return upTime_; }

@@ -5,12 +5,26 @@
 #include <vector>
 
 #include "process.h"
+#include "linux_parser.h"
 
 using std::string;
 using std::to_string;
 using std::vector;
 
+Process::Process(int pid):pid_(pid){
+    user_ = LinuxParser::User(pid);
+    cmd_ = LinuxParser::Command(pid);
+    Refresh();
+}
+
 Process::Process(int pid, string user, string cmd, long upTime, string ram, float cpuUtilization): pid_(pid), user_(user), cmd_(cmd), upTime_(upTime), ram_(ram), cpuUtilization_(cpuUtilization) {}
+
+void Process::Refresh(){
+    upTime_ = LinuxParser::UpTime(Pid());
+    ram_ = LinuxParser::Ram(Pid());
+    cpuUtilization_ = LinuxParser::ActiveJiffies(Pid()) / (0.0 + upTime_) ;
+
+}
 
 // TODO: Return this process's ID
 int Process::Pid() { return pid_; }

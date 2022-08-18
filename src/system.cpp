@@ -25,6 +25,7 @@ System::System(){
 }
 
 void System::Refresh(){
+    cpu_.Refresh();
     memoryUtilization_ = LinuxParser::MemoryUtilization();
     runningProcesses_ = LinuxParser::RunningProcesses();
     totalProcesses_ = LinuxParser::TotalProcesses();

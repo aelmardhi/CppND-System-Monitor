@@ -8,7 +8,7 @@ It contains relevant attributes as shown below
 */
 class Process {
  public:
-  Process(int pid, std::string user, std::string cmd, long uptime, std::string ram_);
+  Process(int pid, std::string user, std::string cmd, long uptime, std::string ram_, float cpuUtilization);
   int Pid();                   // TODO: See src/process.cpp
   std::string User();                      // TODO: See src/process.cpp
   std::string Command();                   // TODO: See src/process.cpp
@@ -24,6 +24,7 @@ class Process {
   std::string cmd_;
   long upTime_;
   std::string ram_;
+  float cpuUtilization_;
 };
 
 #endif

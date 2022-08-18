@@ -30,7 +30,8 @@ vector<Process>& System::Processes() {
         string cmd = LinuxParser::Command(pid);
         long upTime = LinuxParser::UpTime(pid);
         string ram = LinuxParser::Ram(pid);
-        Process process(pid, user, cmd, upTime, ram);
+        float cpuUtilization = LinuxParser::ActiveJiffies(pid) / (0.0 + upTime) ;
+        Process process(pid, user, cmd, upTime, ram, cpuUtilization);
         processes_.emplace_back(process);
     }
     sort(processes_.rbegin(),processes_.rend());

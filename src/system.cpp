@@ -26,25 +26,33 @@ System::System(){
 
 void System::Refresh(){
     cpu_.Refresh();
+    RefreshProcesses();
     memoryUtilization_ = LinuxParser::MemoryUtilization();
     runningProcesses_ = LinuxParser::RunningProcesses();
     totalProcesses_ = LinuxParser::TotalProcesses();
     upTime_ = LinuxParser::UpTime();
 }
+
+void System::RefreshProcesses(){
+    vector<int> pids = LinuxParser::Pids();
+    for (vector<Process>::iterator process = processes_.begin(); process< processes_.end();process++){
+        vector<int>::iterator pos = find(pids.begin(), pids.end(),process->Pid());
+        if(pos == pids.end()){
+            processes_.erase(process);
+        }else{
+            pids.erase(pos);
+        }
+    }
+    for(int pid : pids){
+        processes_.emplace_back(Process(pid));
+    }
+    sort(processes_.rbegin(),processes_.rend());
+}
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
-vector<Process>& System::Processes() { 
-    vector<int> pids = LinuxParser::Pids();
-    processes_ = {};
-    for (int pid : pids){
-        Process process(pid);
-        processes_.emplace_back(process);
-    }
-    sort(processes_.rbegin(),processes_.rend());
-
-    return processes_; }
+vector<Process>& System::Processes() { return processes_; }
 
 // TODO: Return the system's kernel identifier (string)
 std::string System::Kernel() { return kernel_; }

@@ -100,6 +100,28 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   }
 }
 
+void NCursesDisplay::DisplayCommands(WINDOW* window){
+  wattron(window, COLOR_PAIR(1));
+  mvwprintw(window, 0, 1, "Order BY ");
+  wattroff(window, COLOR_PAIR(1));
+  wattron(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 12, " c ");
+  wattroff(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 15, " CPU Des ");
+  wattron(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 26, " C ");
+  wattroff(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 29, " CPU Asc ");
+  wattron(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 40, " r ");
+  wattroff(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 43, " RAM Des ");
+  wattron(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 54, " R ");
+  wattroff(window, COLOR_PAIR(3));
+  mvwprintw(window, 0, 57, " RAM Asc ");
+} 
+
 void NCursesDisplay::Display(System& system, int n) {
   initscr();      // start ncurses
   noecho();       // do not print input values
@@ -111,6 +133,7 @@ void NCursesDisplay::Display(System& system, int n) {
   WINDOW* system_window = newwin(9, x_max - 1, 0, 0);
   WINDOW* process_window =
       newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
+  WINDOW* command_window = newwin(1, x_max-1, process_window->_begy+ process_window->_maxy+1, 0 );
 
   while (1) {
     int c = getch();
@@ -120,12 +143,15 @@ void NCursesDisplay::Display(System& system, int n) {
     system.Refresh();
     init_pair(1, COLOR_BLUE, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_BLACK, COLOR_WHITE);
     box(system_window, 0, 0);
     box(process_window, 0, 0);
     DisplaySystem(system, system_window);
     DisplayProcesses(system.Processes(), process_window, n);
+  DisplayCommands(command_window);
     wrefresh(system_window);
     wrefresh(process_window);
+  wrefresh(command_window);
     refresh();
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }

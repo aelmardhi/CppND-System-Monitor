@@ -21,6 +21,7 @@ You need to properly format the uptime. Refer to the comments mentioned in forma
 System::System(){
     kernel_ = LinuxParser::Kernel();
     os_ = LinuxParser::OperatingSystem();
+    memoryTotal_ = LinuxParser::MemoryTotal();
 }
 
 void System::Refresh(){
@@ -58,7 +59,7 @@ vector<Process>& System::Processes() { return processes_; }
 
 // TODO: Return the system's kernel identifier (string)
 std::string System::Kernel() { return kernel_; }
-
+float System::MemoryTotal() {return memoryTotal_ / 1024.0 / 1024.0;}
 // TODO: Return the system's memory utilization
 float System::MemoryUtilization() { return memoryUtilization_; }
 

@@ -63,6 +63,23 @@ vector<int> LinuxParser::Pids() {
   }
   return pids;
 }
+long LinuxParser::MemoryTotal() { 
+  long memTotal {0};
+  string line;
+  std::ifstream stream(kProcDirectory+kMeminfoFilename);
+  if(stream.is_open()){
+    while( getline(stream,line)){
+      std::istringstream lineStream(line);
+      string key, value;
+      while(lineStream >> key >> value){
+        if(key == "MemTotal:"){
+          memTotal =  std::stol(value);
+        }
+      }
+    }
+  }
+  return memTotal;
+}
 
 // TODO: Read and return the system memory utilization
 float LinuxParser::MemoryUtilization() { 

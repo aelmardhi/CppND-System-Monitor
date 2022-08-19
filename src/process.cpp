@@ -68,10 +68,10 @@ bool Process::operator<(Process const& a) const {
     case OrderingMethod::ByCPYDes :
         return cpuUtilization_ > a.cpuUtilization_;
     case OrderingMethod::ByRAMAsc :
-        return ram_ < a.ram_;
+        return std::stol(ram_) < std::stol(a.ram_);
     
     case OrderingMethod::ByRAMDes :
-        return ram_ > a.ram_;
+        return std::stol(ram_) > std::stol(a.ram_);
     
     default:
         return cpuUtilization_ < a.cpuUtilization_;
@@ -81,10 +81,10 @@ bool Process::operator<(Process const& a) const {
 
 void Process::OrderingBy(int &c){
     switch(c){
-        case 'r' : //m
+        case 'r' : //r
           orderBy = OrderingMethod::ByRAMDes;
           break;
-        case 'R' : //M
+        case 'R' : //R
           orderBy = OrderingMethod::ByRAMAsc;
           break;
         case 'c' : //c

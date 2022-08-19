@@ -104,6 +104,7 @@ void NCursesDisplay::Display(System& system, int n) {
   initscr();      // start ncurses
   noecho();       // do not print input values
   cbreak();       // terminate ncurses on ctrl + c
+  nodelay(stdscr, TRUE); //getch well not wait for key
   start_color();  // enable color
 
   int x_max{getmaxx(stdscr)};
@@ -112,6 +113,12 @@ void NCursesDisplay::Display(System& system, int n) {
       newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
 
   while (1) {
+    int c = getch();
+    if(c != ERR){
+      switch(c){
+        
+      }
+    }
     system.Refresh();
     init_pair(1, COLOR_BLUE, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);

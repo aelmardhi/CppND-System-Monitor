@@ -15,6 +15,9 @@ using std::to_string;
 // 2% is one bar(|)
 std::string NCursesDisplay::ProgressBar(float percent, float total, string unit) {
   std::string result{to_string(percent * 100).substr(0, 4)+"%"};
+  if(percent < 0.1 || percent == 1.0 ){
+   result = " " + to_string(percent * 100).substr(0, 3)+"%";
+  }
   int size{50};
   float bars{percent * size};
 
@@ -22,10 +25,14 @@ std::string NCursesDisplay::ProgressBar(float percent, float total, string unit)
     result += i <= bars ? '|' : ' ';
   }
 
-  string display{to_string(percent * total).substr(0, 4)+"/"+to_string(total).substr(0, 4)};
-  if (percent < 0.1 || percent == 1.0)
-    display = " " + to_string(percent * total).substr(0, 3)+"/"+to_string(total).substr(0, 3);
-  return result + " " + display + unit +" ";
+  string display{to_string(percent * total).substr(0, 4)};
+  if (percent < 0.1 || percent == 1.0 )
+    display = " " + to_string(percent * total).substr(0, 3);
+  if(total == 100)
+    display += "/"+to_string(total).substr(0, 3)+unit+" ";
+  else 
+    display += "/"+to_string(total).substr(0, 4)+unit;
+  return result + " " + display  ;
 }
 
 void NCursesDisplay::DisplaySystem(System& system, WINDOW* window) {

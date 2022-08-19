@@ -8,8 +8,8 @@ class Processor {
 
   // TODO: Declare any necessary private members
  private:
-  long activejiffies_ {0};
-  long totalJiffies_ {1};
+  long activejiffies_{0};
+  long totalJiffies_{1};
   float utilization_{0.0};
 };
 

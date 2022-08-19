@@ -115,9 +115,7 @@ void NCursesDisplay::Display(System& system, int n) {
   while (1) {
     int c = getch();
     if(c != ERR){
-      switch(c){
-        
-      }
+      system.OrderingBy(c);
     }
     system.Refresh();
     init_pair(1, COLOR_BLUE, COLOR_BLACK);

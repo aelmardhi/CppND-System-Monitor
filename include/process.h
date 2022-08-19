@@ -8,6 +8,12 @@ It contains relevant attributes as shown below
 */
 class Process {
  public:
+  enum class OrderingMethod{
+    ByRAMAsc,
+    ByRAMDes,
+    ByCPUAsc,
+    ByCPYDes
+  };
   Process(int pid);
   Process(int pid, std::string user, std::string cmd, long uptime,
           std::string ram_, float cpuUtilization);
@@ -19,6 +25,8 @@ class Process {
   std::string Ram();                       // TODO: See src/process.cpp
   long int UpTime();                       // TODO: See src/process.cpp
   bool operator<(Process const& a) const;  // TODO: See src/process.cpp
+  static OrderingMethod orderBy ;
+  static void OrderingBy(int &c);
 
   // TODO: Declare any necessary private members
  private:

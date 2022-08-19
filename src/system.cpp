@@ -55,7 +55,7 @@ void System::RefreshProcesses() {
   for (Process& process : processes_) {
     process.Refresh();
   }
-  sort(processes_.rbegin(), processes_.rend());
+  sort(processes_.begin(), processes_.end());
 }
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
@@ -80,3 +80,7 @@ int System::TotalProcesses() { return totalProcesses_; }
 
 // TODO: Return the number of seconds since the system started running
 long int System::UpTime() { return upTime_; }
+
+void System::OrderingBy(int &c){
+    Process::OrderingBy(c);
+}

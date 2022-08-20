@@ -13,7 +13,7 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-Process::OrderingMethod Process::orderBy {Process::OrderingMethod::ByCPYDes};
+Process::OrderingMethod Process::orderBy{Process::OrderingMethod::ByCPYDes};
 
 Process::Process(int pid) : pid_(pid) {
   user_ = LinuxParser::User(pid);
@@ -61,37 +61,35 @@ long int Process::UpTime() { return upTime_; }
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
-    switch (orderBy)
-    {
-    case OrderingMethod::ByCPUAsc :
-        return cpuUtilization_ < a.cpuUtilization_;
-    case OrderingMethod::ByCPYDes :
-        return cpuUtilization_ > a.cpuUtilization_;
-    case OrderingMethod::ByRAMAsc :
-        return std::stol(ram_) < std::stol(a.ram_);
-    
-    case OrderingMethod::ByRAMDes :
-        return std::stol(ram_) > std::stol(a.ram_);
-    
+  switch (orderBy) {
+    case OrderingMethod::ByCPUAsc:
+      return cpuUtilization_ < a.cpuUtilization_;
+    case OrderingMethod::ByCPYDes:
+      return cpuUtilization_ > a.cpuUtilization_;
+    case OrderingMethod::ByRAMAsc:
+      return std::stol(ram_) < std::stol(a.ram_);
+
+    case OrderingMethod::ByRAMDes:
+      return std::stol(ram_) > std::stol(a.ram_);
+
     default:
-        return cpuUtilization_ < a.cpuUtilization_;
-    }
-  
+      return cpuUtilization_ < a.cpuUtilization_;
+  }
 }
 
-void Process::OrderingBy(int &c){
-    switch(c){
-        case 'r' : //r
-          orderBy = OrderingMethod::ByRAMDes;
-          break;
-        case 'R' : //R
-          orderBy = OrderingMethod::ByRAMAsc;
-          break;
-        case 'c' : //c
-          orderBy = OrderingMethod::ByCPYDes;
-          break;
-        case 'C' : //C
-          orderBy = OrderingMethod::ByCPUAsc;
-          break;
-      }
+void Process::OrderingBy(int& c) {
+  switch (c) {
+    case 'r':  // r
+      orderBy = OrderingMethod::ByRAMDes;
+      break;
+    case 'R':  // R
+      orderBy = OrderingMethod::ByRAMAsc;
+      break;
+    case 'c':  // c
+      orderBy = OrderingMethod::ByCPYDes;
+      break;
+    case 'C':  // C
+      orderBy = OrderingMethod::ByCPUAsc;
+      break;
+  }
 }

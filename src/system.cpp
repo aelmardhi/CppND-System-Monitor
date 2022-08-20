@@ -81,6 +81,4 @@ int System::TotalProcesses() { return totalProcesses_; }
 // TODO: Return the number of seconds since the system started running
 long int System::UpTime() { return upTime_; }
 
-void System::OrderingBy(int &c){
-    Process::OrderingBy(c);
-}
+void System::OrderingBy(int& c) { Process::OrderingBy(c); }

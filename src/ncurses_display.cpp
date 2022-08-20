@@ -100,7 +100,7 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   }
 }
 
-void NCursesDisplay::DisplayCommands(WINDOW* window){
+void NCursesDisplay::DisplayCommands(WINDOW* window) {
   wattron(window, COLOR_PAIR(1));
   mvwprintw(window, 0, 1, "Order BY ");
   wattroff(window, COLOR_PAIR(1));
@@ -120,24 +120,25 @@ void NCursesDisplay::DisplayCommands(WINDOW* window){
   mvwprintw(window, 0, 54, " R ");
   wattroff(window, COLOR_PAIR(3));
   mvwprintw(window, 0, 57, " RAM Asc ");
-} 
+}
 
 void NCursesDisplay::Display(System& system, int n) {
-  initscr();      // start ncurses
-  noecho();       // do not print input values
-  cbreak();       // terminate ncurses on ctrl + c
-  nodelay(stdscr, TRUE); //getch well not wait for key
-  start_color();  // enable color
+  initscr();              // start ncurses
+  noecho();               // do not print input values
+  cbreak();               // terminate ncurses on ctrl + c
+  nodelay(stdscr, TRUE);  // getch well not wait for key
+  start_color();          // enable color
 
   int x_max{getmaxx(stdscr)};
   WINDOW* system_window = newwin(9, x_max - 1, 0, 0);
   WINDOW* process_window =
       newwin(3 + n, x_max - 1, system_window->_maxy + 1, 0);
-  WINDOW* command_window = newwin(1, x_max-1, process_window->_begy+ process_window->_maxy+1, 0 );
+  WINDOW* command_window = newwin(
+      1, x_max - 1, process_window->_begy + process_window->_maxy + 1, 0);
 
   while (1) {
     int c = getch();
-    if(c != ERR){
+    if (c != ERR) {
       system.OrderingBy(c);
     }
     system.Refresh();
@@ -148,10 +149,10 @@ void NCursesDisplay::Display(System& system, int n) {
     box(process_window, 0, 0);
     DisplaySystem(system, system_window);
     DisplayProcesses(system.Processes(), process_window, n);
-  DisplayCommands(command_window);
+    DisplayCommands(command_window);
     wrefresh(system_window);
     wrefresh(process_window);
-  wrefresh(command_window);
+    wrefresh(command_window);
     refresh();
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }

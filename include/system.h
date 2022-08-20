@@ -21,7 +21,7 @@ class System {
   int RunningProcesses();         // TODO: See src/system.cpp
   std::string Kernel();           // TODO: See src/system.cpp
   std::string OperatingSystem();  // TODO: See src/system.cpp
-  void OrderingBy( int& c);
+  void OrderingBy(int& c);
 
   // TODO: Define any necessary private members
  private:
